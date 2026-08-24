@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- ✅ Mobile viewport fix -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love Letters Swipe</title>
+  <style>
+    html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;   /* ✅ stops vertical + horizontal scroll */
+}
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle, #e90000 0%, #000000e0 100%);
+      font-family: 'Great Vibes', cursive, 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+      overflow-x: hidden; /* ✅ no horizontal scroll */
+      
+    }
+
+    /* Intro note */
+    .note {
+      position: absolute;
+      font-size: 1.5em;
+      color: #141414;
+      opacity: 0;
+      font-family: cursive;
+      transition: opacity 1s ease;
+    }
+    .note.show { opacity: 1; }
+
+    /* Letters */
+    .letter {
+  position: absolute;
+  top: 50%;                 /* ✅ vertically center */
+  left: 50%;                /* ✅ horizontally center */
+  width: 70%;
+  max-width: 600px;
+
+  background: rgba(255,255,255,0.75); /* ✅ softer transparency */
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(255,0,100,0.4);
+  color: #d81b60;
+  text-align: center;
+
+  transform: translate(-50%, -50%) translateX(150%); /* ✅ off-screen start */
+  max-height: 85vh;          /* ✅ fits inside phone screen */
+  overflow-y: auto;          /* ✅ scroll inside card if text is long */
+
+  opacity: 0;
+  transition: transform 0.8s ease, opacity 0.8s ease;
+  line-height: 1.6;
+}
+
+.letter.active {
+  transform: translate(-50%, -50%) translateX(0); /* ✅ perfectly centered */
+  opacity: 1;
+}
+
+
+    h2 {
+      font-family: 'Pacifico', cursive;
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    .letter.active {
+      transform: translate(-50%, -50%) translateX(0);
+      opacity: 1;
+    }
+
+    .letter h2, .letter p {
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .letter.active h2 { opacity: 1; transition-delay: 0.5s; }
+    .letter.active p { opacity: 1; transition-delay: 1s; }
+
+    .signature { margin-top: 15px; font-style: italic; }
+
+    /* Animated swipe hint */
+    .swipe-note {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #ff2f55;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .swipe-note.show {
+      opacity: 1;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 0.3; transform: scale(0.95); }
+      50% { opacity: 1; transform: scale(1.05); }
+      100% { opacity: 0.3; transform: scale(0.95); }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .letter {
+        width: 95%;
+        max-width: none;
+        padding: 25px;
+        font-size: 1.15em;
+        border-radius: 10px;
+      }
+      h2 { font-size: 1.6rem; }
+      .note, .swipe-note { font-size: 1.2rem; }
+      .signature { font-size: 1em; }
+    }
+
+    @media (max-width: 480px) {
+      .letter { padding: 22px; font-size: 1.1em; }
+      h2 { font-size: 1.4rem; }
+    }
+  </style>
+
+  <!-- Background animation styles -->
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{overflow:hidden;height:100vh;background: radial-gradient(circle, #e90000 0%, #000000e0 100%);
+      background-size:400% 400%;animation:bgMove 18s ease infinite;position:relative;}
+    @keyframes bgMove{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+    #bg{position:fixed;width:100%;height:100%;overflow:hidden;top:0;left:0;pointer-events:none;}
+    .heart{position:absolute;top:-60px;font-size:25px;animation:fall linear forwards;opacity:.9;}
+    @keyframes fall{0%{transform:translateY(-50px) rotate(0deg);opacity:0;}10%{opacity:1;}100%{transform:translateY(110vh) rotate(360deg);opacity:0;}}
+    .sparkle{position:absolute;width:3px;height:3px;background:white;border-radius:50%;box-shadow:0 0 15px white;animation:twinkle 2s infinite alternate;}
+    @keyframes twinkle{0%{opacity:.2;transform:scale(.4);}100%{opacity:1;transform:scale(2);}}
+    .particle{position:absolute;width:2px;height:2px;background:white;border-radius:50%;opacity:.4;animation:floatParticle 8s linear infinite;}
+    @keyframes floatParticle{0%{transform:translateY(100vh);}100%{transform:translateY(-20vh);}}
+    .touchHeart{position:absolute;font-size:25px;pointer-events:none;animation:touchAnim 1.2s forwards;}
+    @keyframes touchAnim{0%{transform:translate(-50%,-50%) scale(.5);opacity:1;}100%{transform:translate(-50%,-150%) scale(2);opacity:0;}}
+    .shoot{position:absolute;font-size:22px;left:-60px;top:20%;animation:shootHeart 2.5s linear forwards;}
+    @keyframes shootHeart{0%{transform:translate(0,0);opacity:0;}10%{opacity:1;}100%{transform:translate(120vw,-120px);opacity:0;}}
+  </style>
+</head>
+<body>
+<div id="bg"></div>
+
+<!-- Intro note -->
+<div class="note" id="note">👉 Swipe to reveal 💖</div>
+
+<!-- Letters -->
+<div class="letter" id="letter1">
+  <h2>Not Here, But In Your Hands</h2>
+  <p>Okay, so here’s the funny part… just imagine me as your bestie for a second 🤭.  
+  That “bestie letter” isn’t on this screen — it’s already with you, in physical form.  
+  It's a surprise, so while everyone thinks it’s just a cute bestie note, you’ll know the real truth behind it.<br><br>
+  Now swipe ahead… because the real me is waiting in the next letters.</p>
+  <p class="signature">— Your not‑so‑bestie 😉😂😊</p>
+  <div class="swipe-note">👉 Swipe Please 👉 </div>
+</div>
+
+<div class="letter" id="letter2">
+  <h2>Finally, It’s Me Talking</h2>
+  <p>Happy Birthday, wifey ji 💖,<br>
+  Today the world celebrates you, but for me it’s not just about cake and candles — it’s about celebrating the laughter, the madness, and the love you bring into my life every single day. Honestly, I don’t even need Google to remind me how special you are… because my heart already knows 😅.<br>
+  Even though we’re miles apart, you’re always close to me. Distance is only on the map, in my heart you’re always near. Sometimes I wish I could teleport just to see that smile of yours, but until then, these words will have to carry my love across the miles. 🙈❤️‍🔥<br>
+  You’re my safe place, my future partner, and the one person who can make me smile even on the toughest days. This letter is just a small way of saying thank you for being you — for being my love, my best friend, and my forever.<br>
+  So blow out those candles, make a wish, and remember… I’m here to make sure all your wishes come true. <br>
+  Happy Birthday once again, my sweet crazy and bauni wifey 🎂💖<br>
+  But this isn’t the end… swipe ahead, because the next letter isn’t just about your birthday — it’s about us 💕.</p>
+  <p class="signature">— your little baby</p>
+  <div class="swipe-note">👉 Swipe Please 👉 </div>
+</div>
+
+<div class="letter" id="letter3">
+  <h2>💌 My Future with you</h2>
+  <p>
+    By now you’ve read the birthday wishes, laughed at the bestie joke, and maybe even rolled your eyes at my silly lines 😅.  
+    But what I’m writing now is straight from the heart — no disguise, no jokes, just me.<br>
+
+    You’re the reason my days feel lighter, my love. With you, even the most ordinary moments become special.  
+    Sometimes I wonder how you manage to make me smile even when I’m stressed, and then I realize… it’s just your magic. ✨<br>
+
+    I know I tease you, annoy you with my silly jokes, and irritate you with my madness, but honestly — I wouldn’t trade a single second of it.  
+    Because every laugh, every fight, every silly moment brings me closer to you. 💖<br>
+
+    So here’s the real surprise: this isn’t just a love letter, it’s a proposal.  
+    Not the filmi “shaadi karogi” type (okay, maybe a little 😜), but the genuine promise that I want you with me — today, tomorrow, and forever.<br>
+
+    Happy Birthday once again, my sweet crazy one. And now… will you let me be not just your Bf, but your forever? 💍❤️
+  </p>
+  <p class="signature">— Will you marry me?</p>
+
+</div>
+
+<script>
+const bg=document.getElementById("bg");
+
+// Background animations
+function createHeart(){
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML=["❤️","💖","💕","💗","💘"][Math.floor(Math.random()*5)];
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.fontSize=(15+Math.random()*30)+"px";
+  heart.style.animationDuration=(5+Math.random()*6)+"s";
+  bg.appendChild(heart);
+  setTimeout(()=>{heart.remove();},11000);
+}
+setInterval(createHeart,250);
+
+function createSparkle(){
+  const s=document.createElement("div");
+  s.className="sparkle";
+  s.style.left=Math.random()*100+"vw";
+  s.style.top=Math.random()*100+"vh";
+  s.style.animationDuration=(1+Math.random()*2)+"s";
+  bg.appendChild(s);
+  setTimeout(()=>{s.remove();},5000);
+}
+setInterval(createSparkle,250);
+
+function createParticle(){
+  const p=document.createElement("div");
+  p.className="particle";
+  p.style.left=Math.random()*100+"vw";
+  p.style.animationDuration=(6+Math.random()*8)+"s";
+  bg.appendChild(p);
+  setTimeout(()=>{p.remove();},14000);
+}
+setInterval(createParticle,180);
+
+document.addEventListener("click",function(e){
+  for(let i=0;i<8;i++){
+    const h=document.createElement("div");
+    h.className="touchHeart";
+    h.innerHTML=["❤️","💕","💖","💘"][Math.floor(Math.random()*4)];
+    h.style.left=e.clientX+(Math.random()*80-40)+"px";
+    h.style.top=e.clientY+(Math.random()*80-40)+"px";
+    bg.appendChild(h);
+    setTimeout(()=>{h.remove();},1200);
+  }
+});
+
+function shootingHeart(){
+  const h=document.createElement("div");
+  h.className="shoot";
+  h.innerHTML="💘";
+  h.style.top=(10+Math.random()*60)+"vh";
+  bg.appendChild(h);
+  setTimeout(()=>{h.remove();},2500);
+}
+setInterval(shootingHeart,15000);
+
+// Swipe logic
+const letters=document.querySelectorAll(".letter");
+const note=document.getElementById("note");
+let current=-1; // ✅ show first letter immediately
+let startX=0,endX=0,isDragging=false;
+
+showLetter(current);
+
+// Show note after 3 seconds
+setTimeout(() => note.classList.add("show"), 3000);
+
+function showLetter(index) {
+  letters.forEach((l, i) => {
+    l.classList.remove("active");
+    const swipeHint = l.querySelector(".swipe-note");
+    if (swipeHint) swipeHint.classList.remove("show");
+    if (i === index) {
+      l.classList.add("active");
+      setTimeout(() => {
+        if (swipeHint) swipeHint.classList.add("show");
+      }, 5000);
+    }
+  });
+  if (index >= 0) note.style.display = "none";
+}
+
+// Touch (phone)
+document.addEventListener("touchstart", e => startX = e.touches[0].clientX);
+document.addEventListener("touchend", e => {
+  endX = e.changedTouches[0].clientX;
+  handleSwipe(endX - startX);
+});
+
+// Mouse (desktop drag)
+document.addEventListener("mousedown", e => { isDragging = true; startX = e.clientX; });
+document.addEventListener("mouseup", e => {
+  if (isDragging) {
+    endX = e.clientX;
+    handleSwipe(endX - startX);
+    isDragging = false;
+  }
+});
+
+function handleSwipe(distance) {
+  if (distance > 50) {
+    if (current > 0) {
+      current--;
+      showLetter(current);
+    }
+  } else if (distance < -50) {
+    if (current < letters.length - 1) {
+      current++;
+      showLetter(current);
+    }
+  }
+}
+</script>
+
+<!-- Button (hidden initially) -->
+<a href="birthday4.html" id="promiseBtn" class="promise-btn">💖 See My  Promises 💖</a>
+
+<style>
+.promise-btn {
+  display: none; /* hidden at start */
+  position: fixed; /* stick to bottom */
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 14px 28px;
+  font-size: 1.2em;
+  font-family: 'Pacifico', cursive;
+  color: #fff;
+  background: linear-gradient(45deg, #ff4d6d, #ff80ab);
+  border-radius: 40px;
+  text-decoration: none;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  transition: all 0.4s ease;
+  z-index: 999; /* stays above letters */
+}
+
+/* Reveal animation */
+.show-btn {
+  display: inline-block;
+  animation: popIn 1s forwards;
+}
+
+@keyframes popIn {
+  0% { opacity: 0; transform: translate(-50%, 20px) scale(0.5); }
+  60% { opacity: 1; transform: translate(-50%, -5px) scale(1.1); }
+  100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+</style>
+
+<script>
+  const btn = document.getElementById("promiseBtn");
+
+  // Reveal after 5 seconds
+  setTimeout(() => {
+    btn.classList.add("show-btn");
+  }, 5000);
+</script>
+
+</body>
+</html>
