@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise Page 💍</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: cursive;
+    background: radial-gradient(circle, #e90000 0%, #a42a2ae0 100%);  
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    .promise-box {
+      width: 90%;
+      max-width: 400px;
+      padding: 20px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(255,0,100,0.4);
+      position: relative;
+    }
+
+    h1 {
+      font-size: clamp(1.5rem, 5vw, 2rem);
+      margin-bottom: 15px;
+      color: #ffdde1;
+    }
+
+    @keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+@keyframes bounceIn {
+  0% { opacity: 0; transform: scale(0.3); }
+  50% { opacity: 1; transform: scale(1.1); }
+  70% { transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); } /* keep visible */
+}
+
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); } /* keep visible */
+}
+
+
+
+.promise {
+  font-size: clamp(1rem, 4vw, 1.2rem);
+  opacity: 0;
+}
+
+
+    #question {
+      display: none;
+      margin-top: 20px;
+    }
+   .quiz-btn {
+  padding: 8px 18px;       /* smaller padding */
+  font-size: 0.9em;        /* smaller text */
+  border-radius: 20px;     /* softer corners */
+  background: linear-gradient(45deg, #ff4d6d, #ff80ab);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.quiz-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(255,100,150,0.6);
+}
+
+
+    .heart {
+      position: absolute;
+      font-size: 1.5rem;
+      animation: float 4s linear infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+    }
+
+    #lyrics {
+      margin-top: 20px;
+    }
+    .line {
+      opacity: 0;
+      font-size: clamp(1rem, 4vw, 1.3rem);
+      animation: lyricFade 2s forwards;
+    }
+    .line:nth-child(1) { animation-delay: 0s; }
+    .line:nth-child(2) { animation-delay: 2s; }
+    .line:nth-child(3) { animation-delay: 4s; }
+    .line:nth-child(4) { animation-delay: 6s; }
+
+    @keyframes lyricFade {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="promise-box" id="promiseBox">
+    <h1>💖 My  Promises to You 💖</h1>
+
+  <div class="promise" style="--i:1">✨ I promise to be loyal — <br>always faithful to you<br><br></div>
+  <div class="promise" style="--i:2">✨ I promise to trust you — <br>no doubts, only belief<br><br></div>
+  <div class="promise" style="--i:3">✨ I promise to respect you — <br>your feelings, choices, dreams<br><br></div>
+  <div class="promise" style="--i:4">✨ I promise to protect you — <br>from sadness and fear<br><br></div>
+  <div class="promise" style="--i:5">✨ I promise to be honest —<br> no lies, no secrets<br><br></div>
+  <div class="promise" style="--i:6">✨ I promise to forgive quickly —<br> never let fights last<br><br></div>
+  <div class="promise" style="--i:7">✨ I promise to never give up — <br>on us, no matter what<br><br></div>
+  <div class="promise" style="--i:8">✨ I promise to stay patient — <br>even when things get tough<br><br></div>
+  <div class="promise" style="--i:9">✨ I promise to communicate —<br> always share my heart<br><br></div>
+  <div class="promise" style="--i:10">✨ I promise to stand by you — <br>in every storm<br><br></div>
+
+  <div class="promise" style="--i:11">✨ I promise to make you laugh — <br>even on your worst days<br><br></div>
+  <div class="promise" style="--i:12">✨ I promise to wipe your tears — <br>whenever you cry<br><br></div>
+  <div class="promise" style="--i:13">✨ I promise to celebrate you — <br>every birthday, every win<br><br></div>
+  <div class="promise" style="--i:14">✨ I promise to listen deeply — <br>to every word you say<br><br></div>
+  <div class="promise" style="--i:15">✨ I promise to hug you tight — <br>whenever you need comfort<br><br></div>
+  <div class="promise" style="--i:16">✨ I promise to cheer for you — <br>louder than anyone else<br><br></div>
+  <div class="promise" style="--i:17">✨ I promise to admire you — <br>for your beauty inside and out<br><br></div>
+  <div class="promise" style="--i:18">✨ I promise to dream with you — <br>about our future together<br><br></div>
+  <div class="promise" style="--i:19">✨ I promise to surprise you — <br>with little gestures of love<br><br></div>
+  <div class="promise" style="--i:20">✨ I promise to love endlessly — <br>without conditions, without limits<br><br></div>
+   <div class="promise" style="--i:21">✨ I promise to love endlessly — <br>without conditions, without limits<br><br></div>
+  <div class="promise" style="--i:22">✨ I promise to travel with you — <br>to places we’ve only dreamed of<br><br></div>
+<div class="promise" style="--i:23">✨ I promise to learn with you — <br>new skills, new languages, new worlds<br><br></div>
+<div class="promise" style="--i:24">✨ I promise to grow stronger — <br>so I can protect our love<br><br></div>
+<div class="promise" style="--i:25">✨ I promise to dance with you — even if I’m bad at it<br><br></div>
+<div class="promise" style="--i:26">✨ I promise to build a home — <br>filled with laughter<br><br></div>
+<div class="promise" style="--i:27">✨ I promise to raise kids —<br> with joy and love<br><br></div>
+<div class="promise" style="--i:28">✨ I promise to grow old — <br>holding your hand<br><br></div>
+<div class="promise" style="--i:29">✨ I promise to write letters —<br> even when we’re 80<br><br></div>
+<div class="promise" style="--i:30">✨ I promise to keep romance alive — <br>forever<br><br></div>
+<div class="promise" style="--i:31">✨ I promise to save the last bite — of my favorite food for you<br><br></div>
+<div class="promise" style="--i:32">✨ I promise to share my hoodie — whenever you feel cold<br><br></div>
+<div class="promise" style="--i:33">✨ I promise to sing for you — even off‑key, just to make you smile<br><br></div>
+<div class="promise" style="--i:34">✨ I promise to walk you home — whenever I can<br><br></div>
+<div class="promise" style="--i:35">✨ I promise to be your peace — <br>in every chaos<br><br></div>
+<div class="promise" style="--i:36">✨ I promise to be your strength — <br>in every storm<br><br></div>
+<div class="promise" style="--i:37">✨ I promise to hold your hand — <br>in public, proudly<br><br></div>
+<div class="promise" style="--i:38">✨ I promise to be your partner — <br>in every adventure<br><br></div>
+<div class="promise" style="--i:39">✨ I promise to marry you — <br>when the time is right<br><br></div>
+<div class="promise" style="--i:40">✨I promise to be yours — <br><br><br>always, only yours 💫</div>
+
+
+    <!-- Question for her -->
+    <div id="question">
+      <h1 style="font-size:clamp(1.2rem,5vw,1.5rem);">And What's yours💕</h1>
+      <h2 style="font-size:clamp(1.2rem,5vw,1.5rem);">Will you just promise to love me and always be by my side?💕</h2>
+      <button class="quiz-btn" onclick="yesAnswer()">Yes of course 💖</button>
+      <button class="quiz-btn" id="noBtn" onclick="noAnswer()">No never 😢</button>
+    </div>
+
+  
+</div>
+
+  <script>
+    // Show question after promises fade in
+    setTimeout(() => {
+      const promises = document.querySelectorAll(".promise");
+      promises.forEach(p => p.style.display = "none");
+      document.getElementById("question").style.display = "block";
+    },75000); // adjust timing based on number of promises
+
+    let noClicks = 0;
+   0;
+
+   function noAnswer() {
+    const question = document.getElementById("question");
+    const box = document.getElementById("promiseBox");
+
+    noClicks++;
+    if(noClicks < 3) {
+      // playful wiggle
+      question.querySelector("#noBtn").style.transform = 
+        noClicks % 2 === 0 ? "translateX(-50px)" : "translateX(50px)";
+    } else {
+      // hide question
+      question.style.display = "none";
+      box.insertAdjacentHTML("beforeend", "<h2>💔 You don’t love me...</h2>");
+
+      // after 3s show "I will again ask the question"
+      setTimeout(() => {
+        box.insertAdjacentHTML("beforeend", "<p>I will again ask the question...</p>");
+
+        // after 2s restore the question block
+        setTimeout(() => {
+          question.style.display = "block"; // re‑show the original question
+        }, 2000);
+      }, 3000);
+    }
+  }
+
+    function yesAnswer() {
+    const box = document.getElementById("promiseBox");
+
+    // Step 1: Show Thank You
+    box.innerHTML = "<h1>💖 AWWWWWWWWWWW 💖</h1><p>Your promise is my orbit, and I’ll revolve around your love for eternity. 💫</p>";
+
+    // Step 2: After 3 seconds, show deeper message
+    setTimeout(() => {
+      box.innerHTML = "<h1>💖 This is it 💖</h1><p>But it’s not the end of my feelings for you…</p>";
+    }, 3000);
+
+    // Step 3: After 10 seconds, close all pages (or redirect)
+    setTimeout(() => {
+      // Try closing the window
+      window.close();
+
+      // If browser blocks close, redirect instead
+      window.location.href = "about:blank";
+    }, 10000);
+  }
+
+  
+    
+  
+  const animations = [
+    "fadeIn",
+    
+    "bounceIn",
+    "zoomIn",
+    
+  ];
+
+  const promises = document.querySelectorAll(".promise");
+
+  promises.forEach((p, index) => {
+    const randomAnim = animations[Math.floor(Math.random() * animations.length)];
+    // Always keep 'forwards' so it stays visible after animation
+    p.style.animation = `${randomAnim} 1s forwards`;
+    p.style.animationDelay = `${index * 2}s`;
+  });
+
+
+
+  </script>
+</body>
+</html>
